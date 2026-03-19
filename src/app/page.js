@@ -3,10 +3,12 @@ import styles from "./page.module.css";
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <h1>Conecta tech</h1>
+     <div className={styles.page}>
+      <h1 className={styles.titulo}>Conecta tech</h1>
+   
 
-      <p>Formulario aqui</p>
+      <p className={styles.texto}>Formulario aquí</p>
     </div>
+
   );
 }

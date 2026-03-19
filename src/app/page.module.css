@@ -1,5 +1,5 @@
 .page {
-  --background: #fafafa;
+  --background: #fa8920;
   --foreground: #fff;
 
   --text-primary: #000;
@@ -11,10 +11,17 @@
 
   display: flex;
   min-height: 100vh;
-  align-items: center;
-  justify-content: center;
   font-family: var(--font-geist-sans);
   background-color: var(--background);
+  
+}
+
+.titulo{
+  width: 100%;
+  text-align: right;
+  margin: 20px;
+  color: black;
+  font-size: 44px;
 }
 
 .main {
