@@ -1,29 +1,137 @@
 .page {
-  --background: #fa8920;
-  --foreground: #fff;
+  min-height: 100vh;
+  background: linear-gradient(
+    180deg,
+    #e48f3e 3%,
+    #fa8920 20%,
+    #7b2cbf 100%
+  );
 
   --text-primary: #000;
   --text-secondary: #666;
-
   --button-primary-hover: #383838;
   --button-secondary-hover: #f2f2f2;
   --button-secondary-border: #ebebeb;
 
   display: flex;
-  min-height: 100vh;
+  flex-direction: column;
   font-family: var(--font-geist-sans);
-  background-color: var(--background);
+}
+
+.titulo {
+  color: black;
+  font-size: 90px;
+  margin: 0 0px 0px;
+}
+
+.UniLogo {
+  margin: 0;
+ 
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  margin-top: 60px;
+}
+
+.linea {
+  border: 1px solid black;
+  color: #000;
+  height: 138px;
+  background-color: black;
+  margin: 20px 0;
+  width: 5px;
+}
+
+.boton {
+  background: linear-gradient(45deg, #7b2cbf, #9d4edd);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  font-size: 28px;
+  border-radius: 30px;
+  cursor: pointer;
+  width: auto;
+  height: auto;
+}
+
+.boton:hover {
+  transform: scale(1.10);
+  background: linear-gradient(45deg, #9d4edd, #de9725);
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.scroll {
+  text-align: center;
+  font-size: 30px;
+  margin-top: 20px;
+  animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+
+.seccion1 {
+  text-align: center;
+  padding: 60px 20px;
+  max-width: 800px;
+  margin: 0 auto;
   
 }
 
-.titulo{
-  width: 100%;
-  text-align: right;
-  margin: 20px;
-  color: black;
-  font-size: 44px;
+.seccion1 h2 {
+  background: rgba(255, 255, 255, 0.502); 
+  backdrop-filter: blur(10px);     
+  border-radius: 12px;
+  margin: 34px;
+  font-size: 60px;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
 
+.seccion1 p {
+  font-size: 28px;
+  color: #e6d2ba;
+}
+
+.seccion2 {
+  text-align: center;
+  padding: 60px 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.seccion2 h2 {
+   background: rgba(255, 255, 255, 0.502); 
+  backdrop-filter: blur(10px);     
+  border-radius: 12px;
+  margin: 34px;
+  font-size: 60px;
+  margin-bottom: 15px;
+}
+
+.seccion2 p {
+   font-size: 28px;
+  color: #e6d2ba;
+}
+
+.hero {
+  min-height: 100vh; /* ocupa toda la pantalla */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* centra vertical */
+  align-items: center;     /* centra horizontal */
+}
 .main {
   display: flex;
   min-height: 100vh;
