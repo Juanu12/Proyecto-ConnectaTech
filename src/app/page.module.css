@@ -1,11 +1,6 @@
 .page {
   min-height: 100vh;
-  background: linear-gradient(
-    180deg,
-    #e48f3e 3%,
-    #fa8920 20%,
-    #7b2cbf 100%
-  );
+  background: linear-gradient(180deg, #e48f3e 3%, #fa8920 20%, #7b2cbf 100%);
 
   --text-primary: #000;
   --text-secondary: #666;
@@ -26,7 +21,6 @@
 
 .UniLogo {
   margin: 0;
- 
 }
 
 .wrapper {
@@ -60,7 +54,7 @@
 }
 
 .boton:hover {
-  transform: scale(1.10);
+  transform: scale(1.1);
   background: linear-gradient(45deg, #9d4edd, #de9725);
 }
 
@@ -78,8 +72,13 @@
 }
 
 @keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(10px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
 }
 
 .seccion1 {
@@ -87,16 +86,15 @@
   padding: 60px 20px;
   max-width: 800px;
   margin: 0 auto;
-  
 }
 
 .seccion1 h2 {
-  background: rgba(255, 255, 255, 0.502); 
-  backdrop-filter: blur(10px);     
+  background: rgba(255, 255, 255, 0.502);
+  backdrop-filter: blur(10px);
   border-radius: 12px;
   margin: 34px;
   font-size: 60px;
-  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .seccion1 p {
@@ -112,8 +110,8 @@
 }
 
 .seccion2 h2 {
-   background: rgba(255, 255, 255, 0.502); 
-  backdrop-filter: blur(10px);     
+  background: rgba(255, 255, 255, 0.502);
+  backdrop-filter: blur(10px);
   border-radius: 12px;
   margin: 34px;
   font-size: 60px;
@@ -121,7 +119,7 @@
 }
 
 .seccion2 p {
-   font-size: 28px;
+  font-size: 28px;
   color: #e6d2ba;
 }
 
@@ -130,7 +128,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center; /* centra vertical */
-  align-items: center;     /* centra horizontal */
+  align-items: center; /* centra horizontal */
 }
 .main {
   display: flex;
@@ -253,4 +251,12 @@ a.secondary {
     --button-secondary-hover: #1a1a1a;
     --button-secondary-border: #1a1a1a;
   }
+}
+
+.box {
+  background-color: white;
+  border-color: black;
+  border-width: 1px;
+  border-style: solid;
+  padding: 20px;
 }
