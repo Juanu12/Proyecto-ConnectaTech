@@ -1,0 +1,32 @@
+.button_base {
+  background: white;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  width: 70px;
+  height: 70px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+}
+
+.button_base span {
+  font-size: 0.6rem;
+  font-weight: bold;
+  color: var(--primary);
+}
+
+.active {
+  border: 2px solid var(--primary);
+}
+
+.inactive {
+  border: 2px solid var(--grey);
+}
+
+.button_base:focus-visible {
+  box-shadow: 0 0 0 2px var(--primary-light);
+}

@@ -1,0 +1,24 @@
+.textInput {
+  margin-bottom: 1rem;
+}
+
+.textInput_label {
+  display: block;
+  margin-bottom: 0.2rem;
+  font-weight: bold;
+}
+.textInput_input {
+  display: block;
+  margin-bottom: 0.5rem;
+  border: 2px solid #ccc;
+  border-radius: 20px;
+  padding: 0.6rem 1rem;
+  width: 100%;
+}
+.textInput_error {
+  color: brown;
+}
+
+.textInput_error_container {
+  min-height: 20.5px;
+}

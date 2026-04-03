@@ -1,0 +1,20 @@
+.button_base {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 30px;
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+}
+.primary_button {
+  background: linear-gradient(45deg, var(--primary), var(--primary-light));
+  color: white;
+}
+
+.primary_button:hover {
+  background: var(--primary-dark);
+}
