@@ -6,6 +6,7 @@ import styles from "./login.module.css";
 import Button from "../_components/buttons/Button";
 import Image from "next/image";
 import Role from "../_components/buttons/Role";
+import Link from "next/link";
 export default function Login() {
   const initialValues = { role: "student", email: "", password: "" };
 
@@ -81,11 +82,13 @@ export default function Login() {
                 <TextInput type="password" name="password" label="Password" />
 
                 <div className={styles.container_button}>
-                  <Button
-                    type="submit"
-                    text="Ingresar"
-                    className="primary_button"
-                  />
+                  <Link href="/dashboard">
+                    <Button
+                      type="submit"
+                      text="Ingresar"
+                      className="primary_button"
+                    />
+                  </Link>
                 </div>
               </Form>
             )}
