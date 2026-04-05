@@ -7,8 +7,14 @@ import Button from "../_components/buttons/Button";
 import Image from "next/image";
 import Role from "../_components/buttons/Role";
 import Link from "next/link";
+
 export default function Login() {
-  const initialValues = { role: "student", email: "", password: "" };
+  // Valores iniciales para el formularios
+  const initialValues = {
+    role: "student",
+    email: "",
+    password: "",
+  };
 
   const ValidateSchema = Yup.object().shape({
     email: Yup.string()
@@ -24,6 +30,7 @@ export default function Login() {
   const handleSubmit = (values) => {
     console.log(values);
     // Aca puedo validar si estudiente ya existe
+    // Aca hago la peticion a la API para validar el usuario y contraseña
   };
 
   return (
@@ -82,13 +89,11 @@ export default function Login() {
                 <TextInput type="password" name="password" label="Password" />
 
                 <div className={styles.container_button}>
-                  <Link href="/dashboard">
-                    <Button
-                      type="submit"
-                      text="Ingresar"
-                      className="primary_button"
-                    />
-                  </Link>
+                  <Button
+                    type="submit"
+                    text="Ingresar"
+                    className="primary_button"
+                  />
                 </div>
               </Form>
             )}
