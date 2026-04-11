@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./MenuEstudiantes.module.css";
 
@@ -8,7 +8,7 @@ import styles from "./MenuEstudiantes.module.css";
 const NAV_ITEMS = [
   { id: "radicar", label: "Radicar PQRS", badge: "+" },
   { id: "consultar", label: "Consultar mis PQRS", badge: null },
-  { id: "estado", label: "Estado de solicitudes", badge: "2" },
+  { id: "estado", label: "Estado de solicitudes", badge: null },
 ];
 
 const SECCIONES = {
@@ -26,44 +26,6 @@ const SECCIONES = {
   },
 };
 
-const PQRS_DATA = [
-  {
-    id: "#CT-2024-001",
-    titulo: "Solicitud de paz y salvo académico",
-    fecha: "10 mar 2024",
-    dependencia: "Registro y Control",
-    estado: "Resuelta",
-  },
-  {
-    id: "#CT-2024-002",
-    titulo: "Queja por error en calificación",
-    fecha: "22 mar 2024",
-    dependencia: "Facultad de Ingeniería",
-    estado: "En proceso",
-  },
-  {
-    id: "#CT-2024-003",
-    titulo: "Reclamo facturación semestre",
-    fecha: "5 abr 2024",
-    dependencia: "Financiera",
-    estado: "En revisión",
-  },
-  {
-    id: "#CT-2024-004",
-    titulo: "Petición de certificado de estudio",
-    fecha: "18 abr 2024",
-    dependencia: "Registro y Control",
-    estado: "Resuelta",
-  },
-  {
-    id: "#CT-2024-005",
-    titulo: "Sugerencia mejora laboratorios",
-    fecha: "2 may 2024",
-    dependencia: "Bienestar Universitario",
-    estado: "En proceso",
-  },
-];
-
 const ESTADO_CLASS = {
   Resuelta: "done",
   "En proceso": "pending",
@@ -73,14 +35,7 @@ const ESTADO_CLASS = {
 // ── Iconos ─────────────────────────────────────────────
 function IconRadicar() {
   return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 18 18"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-    >
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5">
       <rect x="2" y="3" width="14" height="12" rx="2" />
       <path d="M6 7h6M6 10h4" />
     </svg>
@@ -88,14 +43,7 @@ function IconRadicar() {
 }
 function IconConsultar() {
   return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 18 18"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-    >
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5">
       <circle cx="8" cy="8" r="5" />
       <path d="M13 13l2.5 2.5" />
     </svg>
@@ -103,14 +51,7 @@ function IconConsultar() {
 }
 function IconEstado() {
   return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 18 18"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-    >
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5">
       <circle cx="9" cy="9" r="6" />
       <path d="M9 6v3.5l2.5 1.5" />
     </svg>
@@ -118,14 +59,7 @@ function IconEstado() {
 }
 function IconLogout() {
   return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 18 18"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-    >
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5">
       <path d="M7 3H4a1 1 0 00-1 1v10a1 1 0 001 1h3" />
       <path d="M12 12l3-3-3-3M15 9H7" />
     </svg>
@@ -141,6 +75,8 @@ const ICONS = {
 export default function Dashboard() {
   const router = useRouter();
   const [seccion, setSeccion] = useState("radicar");
+  const [pqrsList, setPqrsList] = useState([]);
+  const [usuario, setUsuario] = useState(null);
   const [form, setForm] = useState({
     tipo: "",
     asunto: "",
@@ -149,7 +85,58 @@ export default function Dashboard() {
   });
   const [radicado, setRadicado] = useState(null);
 
+  // Cargar usuario y PQRS desde localStorage al iniciar
+  useEffect(() => {
+    // Intentar cargar usuario del localStorage
+    const userData = localStorage.getItem("usuarioActual");
+    
+    console.log("Datos en localStorage:", userData); // Para debugging
+    
+    if (userData) {
+      const usuarioParseado = JSON.parse(userData);
+      console.log("Usuario cargado:", usuarioParseado); // Para debugging
+      setUsuario(usuarioParseado);
+      
+      // Cargar PQRS del usuario específico
+      const stored = localStorage.getItem(`pqrs_${usuarioParseado.id}`);
+      if (stored) {
+        setPqrsList(JSON.parse(stored));
+      }
+    } else {
+      // Si no hay usuario, redirigir al login
+      console.log("No hay usuario, redirigiendo a login");
+      router.push("/login");
+    }
+  }, [router]);
+
+  // Guardar PQRS en localStorage cada vez que cambia
+  useEffect(() => {
+    if (usuario && pqrsList.length > 0) {
+      localStorage.setItem(`pqrs_${usuario.id}`, JSON.stringify(pqrsList));
+    } else if (usuario && pqrsList.length === 0) {
+      localStorage.setItem(`pqrs_${usuario.id}`, JSON.stringify([]));
+    }
+  }, [pqrsList, usuario]);
+
+  // Si no hay usuario, mostrar loading mientras redirige
+  if (!usuario) {
+    return (
+      <div className={styles.loading}>
+        <div className={styles.spinner}></div>
+        <p>Verificando sesión...</p>
+      </div>
+    );
+  }
+
   const info = SECCIONES[seccion];
+
+  // Estadísticas dinámicas
+  const totalRadicadas = pqrsList.length;
+  const enProceso = pqrsList.filter(p => p.estado !== "Resuelta").length;
+  const resueltas = pqrsList.filter(p => p.estado === "Resuelta").length;
+
+  // Actualizar badge del estado
+  NAV_ITEMS[2].badge = enProceso > 0 ? enProceso.toString() : null;
 
   // Formulario
   const handleChange = (e) =>
@@ -161,19 +148,53 @@ export default function Dashboard() {
       alert("Por favor completa todos los campos.");
       return;
     }
-    setRadicado("#CT-2024-0" + Math.floor(Math.random() * 90 + 10));
+
+    // Generar radicado único
+    const nuevoRadicado = `#CT-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+    
+    // Obtener fecha actual formateada
+    const fechaActual = new Date();
+    const fechaFormateada = fechaActual.toLocaleDateString('es-ES', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    });
+
+    // Crear nueva PQRS
+    const nuevaPqrs = {
+      id: nuevoRadicado,
+      titulo: form.asunto,
+      tipo: form.tipo,
+      prioridad: form.prioridad,
+      descripcion: form.descripcion,
+      fecha: fechaFormateada,
+      fechaCompleta: fechaActual.toISOString(),
+      dependencia: "Por asignar",
+      estado: "En proceso",
+      usuarioId: usuario.id,
+      usuarioEmail: usuario.email
+    };
+
+    setPqrsList([nuevaPqrs, ...pqrsList]);
+    setRadicado(nuevoRadicado);
     setForm({ tipo: "", asunto: "", prioridad: "Normal", descripcion: "" });
+    
+    // Limpiar mensaje después de 3 segundos
+    setTimeout(() => setRadicado(null), 3000);
   };
 
   const handleLogout = () => {
-    if (confirm("¿Deseas cerrar sesión?")) router.push("/login");
+    if (confirm("¿Deseas cerrar sesión?")) {
+      localStorage.removeItem("usuarioActual");
+      router.push("/login");
+    }
   };
 
-  // Lista filtrada
+  // Lista filtrada según sección
   const lista =
     seccion === "estado"
-      ? PQRS_DATA.filter((p) => p.estado !== "Resuelta")
-      : PQRS_DATA;
+      ? pqrsList.filter((p) => p.estado !== "Resuelta")
+      : pqrsList;
 
   return (
     <div className={styles.shell}>
@@ -200,10 +221,12 @@ export default function Dashboard() {
         </div>
 
         <div className={styles.userCard}>
-          <div className={styles.avatar}>JS</div>
+          <div className={styles.avatar}>
+            {usuario.iniciales || usuario.nombre?.charAt(0) || usuario.email?.charAt(0)}
+          </div>
           <div>
-            <div className={styles.userName}>Juan Suárez</div>
-            <div className={styles.userCode}>Cod. 20241082</div>
+            <div className={styles.userName}>{usuario.nombre}</div>
+            <div className={styles.userCode}>{usuario.email}</div>
           </div>
         </div>
 
@@ -235,45 +258,32 @@ export default function Dashboard() {
 
       {/* ── CONTENIDO ── */}
       <div className={styles.main}>
-        {/* Topbar */}
         <header className={styles.topbar}>
           <div>
             <h1 className={styles.pageTitle}>{info.title}</h1>
             <p className={styles.pageSub}>{info.sub}</p>
           </div>
-          <button
-            className={styles.btnPrimary}
-            onClick={() => setSeccion("radicar")}
-          >
-            + Nueva PQRS
-          </button>
         </header>
 
         <div className={styles.content}>
-          {/* Stats */}
+          {/* Stats dinámicos */}
           <div className={styles.statsRow}>
             <div className={styles.statCard}>
               <div className={styles.statLabel}>Total radicadas</div>
-              <div className={styles.statValue}>5</div>
+              <div className={styles.statValue}>{totalRadicadas}</div>
             </div>
             <div className={styles.statCard}>
               <div className={styles.statLabel}>En proceso</div>
               <div className={styles.statValue}>
-                <span
-                  className={styles.dot}
-                  style={{ background: "#E87722" }}
-                />
-                2
+                <span className={styles.dot} style={{ background: "#E87722" }} />
+                {enProceso}
               </div>
             </div>
             <div className={styles.statCard}>
               <div className={styles.statLabel}>Resueltas</div>
               <div className={styles.statValue}>
-                <span
-                  className={styles.dot}
-                  style={{ background: "#7C3AED" }}
-                />
-                3
+                <span className={styles.dot} style={{ background: "#7C3AED" }} />
+                {resueltas}
               </div>
             </div>
           </div>
@@ -309,11 +319,7 @@ export default function Dashboard() {
                 </div>
                 <div className={styles.formGroup}>
                   <label>Prioridad</label>
-                  <select
-                    name="prioridad"
-                    value={form.prioridad}
-                    onChange={handleChange}
-                  >
+                  <select name="prioridad" value={form.prioridad} onChange={handleChange}>
                     {["Normal", "Alta", "Urgente"].map((p) => (
                       <option key={p}>{p}</option>
                     ))}
@@ -353,27 +359,39 @@ export default function Dashboard() {
 
           {/* ── Sección: Consultar / Estado ── */}
           {(seccion === "consultar" || seccion === "estado") && (
-            <div className={styles.pqrsList}>
-              {lista.map((p) => (
-                <div key={p.id} className={styles.pqrsItem}>
-                  <span className={styles.radicado}>{p.id}</span>
-                  <div className={styles.pqrsInfo}>
-                    <div className={styles.pqrsTitulo}>{p.titulo}</div>
-                    <div className={styles.pqrsMeta}>
-                      {seccion === "estado"
-                        ? "Última actualización:"
-                        : "Radicada:"}{" "}
-                      {p.fecha} · {p.dependencia}
-                    </div>
-                  </div>
-                  <span
-                    className={`${styles.estado} ${styles[ESTADO_CLASS[p.estado]]}`}
+            <>
+              {lista.length === 0 ? (
+                <div className={styles.emptyState}>
+                  <p>📭 No tienes solicitudes {seccion === "estado" ? "activas" : "registradas"}</p>
+                  <button 
+                    className={styles.btnPrimary}
+                    onClick={() => setSeccion("radicar")}
                   >
-                    {p.estado}
-                  </span>
+                    Crear primera PQRS
+                  </button>
                 </div>
-              ))}
-            </div>
+              ) : (
+                <div className={styles.pqrsList}>
+                  {lista.map((p) => (
+                    <div key={p.id} className={styles.pqrsItem}>
+                      <span className={styles.radicado}>{p.id}</span>
+                      <div className={styles.pqrsInfo}>
+                        <div className={styles.pqrsTitulo}>{p.titulo}</div>
+                        <div className={styles.pqrsMeta}>
+                          Tipo: {p.tipo} · {p.dependencia} · {p.fecha}
+                          {p.prioridad !== "Normal" && (
+                            <span className={styles.prioridadBadge}> · {p.prioridad}</span>
+                          )}
+                        </div>
+                      </div>
+                      <span className={`${styles.estado} ${styles[ESTADO_CLASS[p.estado]]}`}>
+                        {p.estado}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>
