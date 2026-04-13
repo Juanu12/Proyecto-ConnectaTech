@@ -7,11 +7,16 @@ import Button from "../_components/buttons/Button";
 import Image from "next/image";
 import Role from "../_components/buttons/Role";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+const API_URL = "https://69d19fa95043d95be9711b95.mockapi.io/api/v1/Users";
 
 export default function Login() {
+  const router = useRouter();
+
   // Valores iniciales para el formularios
   const initialValues = {
-    role: "student",
+    role: "estudiantes",
     email: "",
     password: "",
   };
@@ -27,10 +32,36 @@ export default function Login() {
     password: Yup.string().required("Password Requerido"),
   });
 
-  const handleSubmit = (values) => {
-    console.log(values);
-    // Aca puedo validar si estudiente ya existe
-    // Aca hago la peticion a la API para validar el usuario y contraseña
+  const handleSubmit = async (values, { setSubmitting }) => {
+    try {
+      const response = await fetch(API_URL);
+
+      if (!response.ok) {
+        throw new Error("No se pudo consultar la API");
+      }
+
+      const data = await response.json();
+      const usersByRole = data?.[0]?.[values.role] ?? [];
+
+      const user = usersByRole.find(
+        (item) =>
+          item.correo === values.email && item.password === values.password,
+      );
+
+      if (!user) {
+        alert("Correo o contraseña incorrectos");
+        return;
+      }
+
+      const targetPath =
+        values.role === "estudiantes" ? "/estudiantes" : "/profesores";
+      router.push(targetPath);
+    } catch (error) {
+      console.error(error);
+      alert("Error al validar el usuario");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -64,20 +95,20 @@ export default function Login() {
 
                   <h2>
                     Portal{" "}
-                    {values.role === "student" ? "Estudiante" : "Docente"}
+                    {values.role === "estudiantes" ? "Estudiante" : "Docente"}
                   </h2>
                   <h4>Soy: </h4>
                 </div>
                 <div className={styles.form_header_buttons}>
                   <Role
                     role="Estudiante"
-                    active={values.role === "student"}
-                    onClick={() => setFieldValue("role", "student")}
+                    active={values.role === "estudiantes"}
+                    onClick={() => setFieldValue("role", "estudiantes")}
                   />
                   <Role
                     role="Docente"
-                    active={values.role === "teacher"}
-                    onClick={() => setFieldValue("role", "teacher")}
+                    active={values.role === "profesores"}
+                    onClick={() => setFieldValue("role", "profesores")}
                   />
                 </div>
 

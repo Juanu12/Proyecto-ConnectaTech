@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import styles from "./MenuEstudiantes.module.css";
+import styles from "../_comp_styles/dashboard.module.css";
 
 // ── Datos ──────────────────────────────────────────────
 const NAV_ITEMS = [
