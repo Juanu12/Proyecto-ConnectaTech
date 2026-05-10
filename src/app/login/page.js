@@ -5,22 +5,19 @@ import TextInput from "../_components/Forms/TextInput";
 import styles from "./login.module.css";
 import Button from "../_components/buttons/Button";
 import Image from "next/image";
-import Role from "../_components/buttons/Role";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-
-const API_URL = "https://69d19fa95043d95be9711b95.mockapi.io/api/v1/Users";
+import { useUser } from "../../context/UserContext";
 
 export default function Login() {
   const router = useRouter();
+  const { login } = useUser();
 
   // Valores iniciales para el formularios
   const initialValues = {
-    role: "estudiantes",
     email: "",
     password: "",
   };
-
+  // Valores de validación con Yup
   const ValidateSchema = Yup.object().shape({
     email: Yup.string()
       .email("Correo invalido")
@@ -31,34 +28,41 @@ export default function Login() {
       .required("Email Requerido"),
     password: Yup.string().required("Password Requerido"),
   });
-
-  const handleSubmit = async (values, { setSubmitting }) => {
+  // Funcion para manejar el submit (envio) del formulario
+  const handleSubmit = async (values, { setSubmitting, setStatus }) => {
     try {
-      const response = await fetch(API_URL);
-
+      // Inicio del estado de envio, viene de formik
+      setStatus("");
+      // Consulta a la API con los datos del formulario, usando variables de entorno para la URL
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}?email=${values.email}&password=${values.password}`,
+      );
+      // Si la respuesta no es ok, lanza un error para ser capturado en el catch
       if (!response.ok) {
         throw new Error("No se pudo consultar la API");
       }
-
+      // Parseo de la respuesta JSON, y manejo del caso donde la API devuelve un array de usuarios (aunque se espera uno solo)
       const data = await response.json();
-      const usersByRole = data?.[0]?.[values.role] ?? [];
-
-      const user = usersByRole.find(
-        (item) =>
-          item.correo === values.email && item.password === values.password,
-      );
-
+      const user = Array.isArray(data) ? data[0] : null;
+      // Si no se encuentra un usuario, se muestra un mensaje de error
       if (!user) {
-        alert("Correo o contraseña incorrectos");
+        setStatus("No se encontró un usuario con esos datos.");
         return;
       }
 
-      const targetPath =
-        values.role === "estudiantes" ? "/estudiantes" : "/profesores";
-      router.push(targetPath);
+      // Guardar en contexto el usuario completo que llega desde la API
+      login(user);
+
+      // Redirección basada en el rol del usuario, usando el router de Next.js para navegar a la página correspondiente
+      if (user.role === "docente") {
+        router.push("/profesores");
+      } else {
+        router.push("/estudiantes");
+      }
     } catch (error) {
-      console.error(error);
-      alert("Error al validar el usuario");
+      setStatus(
+        "No se pudo validar el usuario. Revisa tus datos e intenta de nuevo.",
+      );
     } finally {
       setSubmitting(false);
     }
@@ -83,7 +87,7 @@ export default function Login() {
             validationSchema={ValidateSchema}
             onSubmit={handleSubmit}
           >
-            {({ values, setFieldValue }) => (
+            {({ status }) => (
               <Form>
                 <div className={styles.form_header}>
                   <Image
@@ -93,23 +97,7 @@ export default function Login() {
                     height={31}
                   />
 
-                  <h2>
-                    Portal{" "}
-                    {values.role === "estudiantes" ? "Estudiante" : "Docente"}
-                  </h2>
-                  <h4>Soy: </h4>
-                </div>
-                <div className={styles.form_header_buttons}>
-                  <Role
-                    role="Estudiante"
-                    active={values.role === "estudiantes"}
-                    onClick={() => setFieldValue("role", "estudiantes")}
-                  />
-                  <Role
-                    role="Docente"
-                    active={values.role === "profesores"}
-                    onClick={() => setFieldValue("role", "profesores")}
-                  />
+                  <h2>Portal de Conectatech</h2>
                 </div>
 
                 <TextInput
@@ -126,6 +114,11 @@ export default function Login() {
                     className="primary_button"
                   />
                 </div>
+                {status ? (
+                  <p className={styles.error_message} aria-live="polite">
+                    {status}
+                  </p>
+                ) : null}
               </Form>
             )}
           </Formik>
