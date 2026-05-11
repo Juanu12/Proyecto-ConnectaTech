@@ -17,6 +17,8 @@ const SideBar = () => {
 
   const displayName = user?.name ?? "Usuario";
   const displayCode = user?.id ?? "Sin código";
+  const role = user?.role ?? "Sin rol";
+
   const avatarInitials =
     displayName
       .split(" ")
@@ -53,6 +55,7 @@ const SideBar = () => {
         <div>
           <div className={styles.userName}>{displayName}</div>
           <div className={styles.userCode}>Cod. {displayCode}</div>
+          <div className={styles.userName}>Rol: {role}</div>
         </div>
       </div>
 

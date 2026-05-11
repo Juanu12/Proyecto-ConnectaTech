@@ -14,8 +14,8 @@ export default function Login() {
 
   // Valores iniciales para el formularios
   const initialValues = {
-    email: "",
-    password: "",
+    email: "ana@unab.edu.co",
+    password: "abcdef",
   };
   // Valores de validación con Yup
   const ValidateSchema = Yup.object().shape({
@@ -35,7 +35,7 @@ export default function Login() {
       setStatus("");
       // Consulta a la API con los datos del formulario, usando variables de entorno para la URL
       const response = await fetch(
-        `https://69d19ec65043d95be9711a7f.mockapi.io/api/v1/users?email=${values.email}&password=${values.password}`,
+        `https://69d19fa95043d95be9711b95.mockapi.io/api/v1/Users?email=${values.email}&password=${values.password}`,
       );
       // Si la respuesta no es ok, lanza un error para ser capturado en el catch
       if (!response.ok) {
