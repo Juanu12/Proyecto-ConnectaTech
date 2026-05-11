@@ -1,8 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import { useUser } from "@/context/UserContext";
-import { findUserById } from "@/data/users";
 import styles from "../../_comp_styles/dashboard.module.css";
 
 const getStatusClass = (status) => {
@@ -14,13 +12,8 @@ const getStatusClass = (status) => {
 };
 
 const EstudianteDetalle = () => {
-  const params = useParams();
   const { user: loggedUser } = useUser();
-  const studentId = Array.isArray(params.id) ? params.id[0] : params.id;
-
-  const student =
-    findUserById(studentId) ??
-    (loggedUser?.id === studentId ? loggedUser : null);
+  const student = loggedUser;
 
   if (!student) {
     return (
@@ -38,7 +31,7 @@ const EstudianteDetalle = () => {
     );
   }
 
-  const pqrs = student.pqrs ?? [];
+  const pqrs = student?.pqrs ?? [];
 
   return (
     <div className={styles.studentPage}>
@@ -56,7 +49,7 @@ const EstudianteDetalle = () => {
 
         <div className={styles.pqrsList}>
           {pqrs.length > 0 ? (
-            pqrs.map((pqrsItem) => (
+            pqrs.map((pqrsItem, i) => (
               <article className={styles.pqrsItem} key={pqrsItem.id}>
                 <div className={styles.radicado}>{pqrsItem.id}</div>
                 <div className={styles.pqrsInfo}>

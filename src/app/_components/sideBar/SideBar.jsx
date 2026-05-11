@@ -65,7 +65,7 @@ const SideBar = () => {
       </div>
 
       <nav className={styles.nav}>
-        <div className={styles.navLabel}>Menú estudiante</div>
+        <div className={styles.navLabel}>Menú</div>
 
         <div className={styles.divider} />
         {role === "estudiante" ? (
@@ -73,8 +73,7 @@ const SideBar = () => {
             className={`${styles.navItem} ${styles.pqrsButton}`}
             onClick={handlePqrs}
           >
-            <span className={styles.navIcon}>{ICONS.pqrs ?? "PQ"}</span>
-            PQRS
+            Revisar mis PQRS
           </button>
         ) : null}
         <button
