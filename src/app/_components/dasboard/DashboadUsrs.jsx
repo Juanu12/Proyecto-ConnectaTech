@@ -1,4 +1,5 @@
 "use client";
+import * as Yup from "yup";
 import styles from "../../_comp_styles/dashboard.module.css";
 import formStyles from "../../_components/Forms/radicar.module.css";
 
@@ -18,8 +19,22 @@ const DashboadUsrs = () => {
     descripcion: "",
   };
 
+  const validationSchema = Yup.object().shape({
+    tipo: Yup.string().required("Selecciona un tipo de PQRS"),
+    asunto: Yup.string()
+      .trim()
+      .min(3, "El asunto debe tener al menos 3 caracteres")
+      .required("El asunto es obligatorio"),
+    descripcion: Yup.string()
+      .trim()
+      .min(10, "La descripción debe tener al menos 10 caracteres")
+      .required("La descripción es obligatoria"),
+  });
+
   const handleSubmit = (values) => {
-    console.log(values);
+    alert(
+      `PQRS enviada:\n\nTipo: ${values.tipo}\nAsunto: ${values.asunto}\nDescripción: ${values.descripcion}`,
+    );
   };
 
   return (
@@ -36,7 +51,11 @@ const DashboadUsrs = () => {
           <Stats />
 
           <div className={formStyles.formPQRS}>
-            <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              onSubmit={handleSubmit}
+            >
               <Form>
                 <SelectInput label="Tipo de PQRS" name="tipo">
                   <option value="">Selecciona una opción</option>
