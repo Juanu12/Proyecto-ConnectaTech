@@ -15,6 +15,11 @@ const SideBar = () => {
     router.push("/");
   };
 
+  const handlePqrs = () => {
+    if (!user?.id) return;
+    router.push(`/estuduantes/${user.id}`);
+  };
+
   const displayName = user?.name ?? "Usuario";
   const displayCode = user?.id ?? "Sin código";
   const role = user?.role ?? "Sin rol";
@@ -63,6 +68,15 @@ const SideBar = () => {
         <div className={styles.navLabel}>Menú estudiante</div>
 
         <div className={styles.divider} />
+        {role === "estudiante" ? (
+          <button
+            className={`${styles.navItem} ${styles.pqrsButton}`}
+            onClick={handlePqrs}
+          >
+            <span className={styles.navIcon}>{ICONS.pqrs ?? "PQ"}</span>
+            PQRS
+          </button>
+        ) : null}
         <button
           className={`${styles.navItem} ${styles.logout}`}
           onClick={handleLogout}
