@@ -1,10 +1,43 @@
 "use client";
+import { useState, useEffect } from "react";
 import styles from "../../_comp_styles/dashboard.module.css";
 import { useUser } from "../../../context/UserContext";
 
+const API_URL = "https://69d19ec65043d95be9711a7f.mockapi.io/api/v1/pqrs";
+
 const Stats = () => {
   const { user } = useUser();
-  const pqrs = user?.pqrs ?? [];
+  const [pqrs, setPqrs] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!user?.email) return;
+
+    const fetchPqrs = async () => {
+      try {
+        const res = await fetch(API_URL);
+        if (!res.ok) throw new Error("Error fetching PQRS");
+        const all = await res.json();
+
+        const relevant = Array.isArray(all)
+          ? all.filter((p) =>
+              user.role === "estudiante"
+                ? p.sentFrom === user.email
+                : p.sentTo === user.email,
+            )
+          : [];
+
+        setPqrs(relevant);
+      } catch (err) {
+        console.error("Stats fetch error", err);
+        setPqrs([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPqrs();
+  }, [user]);
 
   const total = pqrs.length;
   const enProceso = pqrs.filter(

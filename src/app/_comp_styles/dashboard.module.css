@@ -373,8 +373,9 @@
   border: 0.5px solid #e0e4ed;
   border-radius: 10px;
   padding: 16px 20px;
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
   gap: 16px;
 }
 
@@ -416,6 +417,52 @@
   border-radius: 20px;
   white-space: nowrap;
   flex-shrink: 0;
+}
+
+.columnRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.responseToggle {
+  background: transparent;
+  border: none;
+  color: #1a56db;
+  cursor: pointer;
+  font-size: 13px;
+  text-decoration: underline;
+  padding: 2px 6px;
+}
+
+.responseContent {
+  font-size: 13px;
+  color: #374151;
+  white-space: pre-wrap;
+}
+
+.responseBox {
+  grid-column: 1 / -1;
+  margin-top: 10px;
+  padding: 12px;
+  background: #f9fafb;
+  border: 0.5px solid #f0f2f5;
+  border-radius: 8px;
+}
+
+.responseLabel {
+  display: block;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 6px;
+}
+
+.pqrsSubject {
+  font-size: 13px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 6px;
 }
 
 .done {
@@ -503,6 +550,55 @@
 
 .btnSecondary:hover {
   background: #f4f6fb;
+}
+
+/* Alert box for unauthenticated users */
+.alertBox {
+  display: flex;
+  justify-content: center;
+  padding: 36px 20px;
+}
+
+.alertContent {
+  max-width: 720px;
+  width: 100%;
+  background: #fff9f2;
+  border: 1px solid #fde2c7;
+  padding: 20px 22px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(17, 24, 39, 0.06);
+}
+
+.alertTitle {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #92400e;
+}
+
+.alertText {
+  margin: 0 0 12px;
+  color: #7c5a2a;
+  font-size: 14px;
+}
+
+.alertActions {
+  display: flex;
+  gap: 10px;
+}
+
+.alertButton {
+  display: inline-block;
+  background: #7c3aed;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.alertButton:hover {
+  background: #5b21b6;
 }
 
 /* ── Responsive ── */

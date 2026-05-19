@@ -1,0 +1,71 @@
+/* Styles for ListPqrs component */
+.container {
+  background: #fff;
+  border-radius: 18px;
+  border: 1px solid #e0e4ed;
+  padding: 20px;
+}
+.header {
+  margin-bottom: 16px;
+}
+.title {
+  margin: 0;
+  font-size: 18px;
+  color: #1a1a2e;
+}
+.subtitle {
+  margin: 6px 0 0;
+  color: #6b7280;
+  font-size: 13px;
+}
+.loading {
+  color: #374151;
+}
+.error {
+  color: #b91c1c;
+  margin-bottom: 12px;
+}
+.empty {
+  color: #6b7280;
+}
+.grid {
+  display: grid;
+  gap: 12px;
+}
+.card {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 16px;
+  background: #f9fafb;
+}
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.subject {
+  color: #111827;
+}
+.statusBadge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #e0f2fe;
+  color: #075985;
+  font-size: 12px;
+  font-weight: 600;
+}
+.description {
+  margin: 0 0 10px;
+  color: #374151;
+}
+.metaGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 8px;
+  font-size: 13px;
+  color: #4b5563;
+}
+.metaItem {
+}

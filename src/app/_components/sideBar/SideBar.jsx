@@ -17,7 +17,7 @@ const SideBar = () => {
 
   const handlePqrs = () => {
     if (!user?.id) return;
-    router.push(`/estuduantes/${user.id}`);
+    router.push(`/estudiantes/${user.id}`);
   };
 
   const displayName = user?.name ?? "Usuario";
