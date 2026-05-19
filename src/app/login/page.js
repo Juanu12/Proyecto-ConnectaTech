@@ -14,8 +14,8 @@ export default function Login() {
 
   // Valores iniciales para el formularios
   const initialValues = {
-    email: "ana@unab.edu.co",
-    password: "abcdef",
+    email: "",
+    password: "",
   };
   // Valores de validación con Yup
   const ValidateSchema = Yup.object().shape({
