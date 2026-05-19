@@ -19,6 +19,7 @@ const responseSchema = Yup.object().shape({
 
 const ListPqrs = () => {
   const { user } = useUser();
+  // Estados para manejar la lista de PQRS, el estado de carga y posibles errores durante la consulta a la API
   const [pqrs, setPqrs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -26,6 +27,8 @@ const ListPqrs = () => {
   // Cargar todas las PQRS del usuario docente
   const userEmail = user?.email;
 
+  // UseEffect para cargar las PQRS asignadas al docente al montar el componente,
+  // y cada vez que cambie el email del usuario. Si no hay email, no se hace la consulta.
   useEffect(() => {
     if (!userEmail) return;
 
@@ -70,6 +73,7 @@ const ListPqrs = () => {
     return null;
   }
 
+  // Fucion que actualiza una PQRS con la respuesta del docente, y cambia su estado a "resuelta"
   const handleResponse = async (item, values, actions) => {
     const updatedItem = {
       ...item,

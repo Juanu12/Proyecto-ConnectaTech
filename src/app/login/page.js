@@ -67,6 +67,7 @@ export default function Login() {
       setSubmitting(false);
     }
   };
+  // Renderizado del formulario
 
   return (
     <div className={styles.login}>

@@ -5,8 +5,10 @@ import { useState, useEffect } from "react";
 import styles from "../../_comp_styles/dashboard.module.css";
 import { useUser } from "@/context/UserContext";
 
+// Endpoint de API de prueba, para obtenr las pqrs.
 const API_URL = "https://69d19ec65043d95be9711a7f.mockapi.io/api/v1/pqrs";
 
+// Función para asignar clases CSS basadas en el estado de la PQRS, normalizando el texto para evitar problemas de mayúsculas/minúsculas y manejando casos donde el estado pueda ser nulo o indefinido
 const getStatusClass = (status) => {
   const normalized = (status ?? "").toLowerCase();
 
@@ -18,10 +20,12 @@ const getStatusClass = (status) => {
 export default function EstudianteDetalle() {
   const user = useUser();
   const userEmail = user?.user?.email;
+  // Estados para manejar la lista de PQRS, el estado de carga y posibles errores durante la consulta a la API
   const [pqrs, setPqrs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // UseEffect para cargar las PQRS del estudiante al montar el componente, y cada vez que cambie el email del usuario. Si no hay email, no se hace la consulta.
   useEffect(() => {
     if (!userEmail) return;
 

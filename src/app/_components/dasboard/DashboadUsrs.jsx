@@ -37,6 +37,7 @@ const DashboadUsrs = () => {
     response: "",
   };
 
+  // Validación del formulario de radicación de PQRS.
   const validationSchema = Yup.object().shape({
     type: Yup.string().required("Selecciona un tipo de PQRS"),
     subject: Yup.string()

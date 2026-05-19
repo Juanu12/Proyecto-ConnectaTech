@@ -1,11 +1,8 @@
- # Descripcion del proyecto
+# Descripcion del proyecto
 
- - El proyecto “Conecta Tech” consiste en diseñar y desarrollar un prototipo funcional de Preguntas Quejas Reclamos y Sugerencias interno enfocado al programa “Tecnología en Desarrollo de Software Dual” de la UNAB. 
+- El proyecto “Conecta Tech” consiste en diseñar y desarrollar un prototipo funcional de Preguntas Quejas Reclamos y Sugerencias interno enfocado al programa “Tecnología en Desarrollo de Software Dual” de la UNAB.
 
- - Este prototipo tiene como objetivo principal validar la facilidad en la comunicación entre estudiantes y profesores del programa “Tecnología en Desarrollo de Software Dual” reduciendo los tiempos de respuesta mediante el uso de un sistema Peticiones, Quejas, Reclamos y Sugerencias, con el fin de manejar situaciones de bajo impacto que no requieran de una intervención a un nivel académico directivo superior.
-
-
-
+- Este prototipo tiene como objetivo principal validar la facilidad en la comunicación entre estudiantes y profesores del programa “Tecnología en Desarrollo de Software Dual” reduciendo los tiempos de respuesta mediante el uso de un sistema Peticiones, Quejas, Reclamos y Sugerencias, con el fin de manejar situaciones de bajo impacto que no requieran de una intervención a un nivel académico directivo superior.
 
 ## Donde visualizar el proyecto en la web
 
@@ -17,21 +14,17 @@ https://proyecto-connecta-tech.vercel.app/
 
 - Contar con la ultima y mas estable version de node js
 
-
 - Contar con una cuenta de github
-
-
 
 ## Como se inicializar el proyecto
 
 First, run the development server:
 
-
 ```bash
 
 # 1
 
-## utilizar el comando : 
+## utilizar el comando :
 git clone  https://github.com/Juanu12/Proyecto-ConnectaTech
 
 # 2
@@ -45,25 +38,23 @@ npm run dev
 
 # 4
 
-## Elejir en la terminal servidor de preferencia 
+## Elejir en la terminal servidor de preferencia
 
 ```
 
 # Tecnologías principales usadas:
 
 - Next js
-- React 
+- React
 - Node Js
-- Html 
-- Css 
-
+- Html
+- Css
 
 ## Otros recursos utilizados
 
 </br>
 
 ### **Mockapi** : este servicio provee endpoints online los cuáles se pueden llamar en proyectos sin necesidad de crearlos con backend real
-
 
 <br>
 <br>
@@ -72,12 +63,11 @@ npm run dev
 
 - Next js
 
-
 # Librería principal
 
 - React
 
-# Otras dependencias utilizadas 
+# Otras dependencias utilizadas
 
 ### **Formik** : Se utiliza para gestionar formularios de manera estructurada. Permite controlar el estado de los campos, manejar eventos de envío y gestionar errores de forma centralizada, reduciendo la complejidad del código.
 
@@ -125,7 +115,7 @@ Proyecto-ConnectaTech/
             └── page.js                # Página de pruebas o ruta experimental
 ```
 
-## Créditos 
+## Créditos
 
 Sebastian Ricardo Torres
 
